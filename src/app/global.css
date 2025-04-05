@@ -53,6 +53,22 @@
     animation: shine 5s linear infinite;
 }
 
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-gradient {
+    animation: gradient 1s linear infinite;
+}
+
 :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -89,7 +105,44 @@ body {
     background-color: rgba(0, 0, 0, 0.35); /* 35% black overlay */
     z-index: -1;
 }
+/* Apply to both mobile and medium-sized devices */
+@media (max-width: 1200px) {
+    .dotted-bg {
+        background-attachment: scroll;
+        background-image: none; /* Remove background from the main element */
+        background-color: #000000; /* Pure black background to match image */
+    }
 
+    /* Show background only on the top portion */
+    .dotted-bg::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50vh; /* Only cover top half of viewport height */
+        background-image: url("/background2.webp");
+        background-size: cover;
+        background-position: top center; /* Focus on top portion of image */
+        z-index: -1;
+    }
+
+    /* Add a gradient fade out at the bottom of the background */
+    .dotted-bg::after {
+        content: "";
+        position: fixed;
+        top: 45vh; /* Start slightly above the halfway point */
+        left: 0;
+        width: 100%;
+        height: 15vh;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            #000000
+        ); /* Pure black to match image */
+        z-index: -1;
+    }
+}
 .gradient-text {
     background: linear-gradient(to right, #c4c1c1, #a8a8a8);
     -webkit-background-clip: text;

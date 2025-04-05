@@ -2,7 +2,8 @@ import Link from "next/link";
 import SpotlightCard from "@/components/ui/spotlight-card";
 import Aphorism from "@/components/ui/aphorisms";
 import ShinyText from "@/components/ui/shinytext";
-import { motion } from "framer-motion";
+import GradientText from "@/components/ui/gradienttext";
+import DecryptedText from "@/components/ui/decrypted-text";
 
 export default function Home() {
     return (
@@ -17,15 +18,25 @@ export default function Home() {
                     />
                 </div>
 
-                <h1 className="text-5xl md:text-7xl font-semibold tracking-tight mb-6">
-                    <span className="block gradient-text">
-                        Helping People Do
-                    </span>
-                    <span className="block mt-2 gradient-text">
-                        Extraordinary Things
-                    </span>
+                <h1 className="text-5xl md:text-7xl tracking-tight mb-6 gradient-text">
+                    <DecryptedText
+                        text="Helping People Build"
+                        speed={80}
+                        maxIterations={15}
+                        sequential={true}
+                        animateOn="view"
+                        useOriginalCharsOnly={true}
+                    />
+                    <DecryptedText
+                        text="Extraordinary Things"
+                        className=" mt-2 "
+                        speed={90}
+                        maxIterations={50}
+                        sequential={true}
+                        animateOn="view"
+                        useOriginalCharsOnly={true}
+                    />
                 </h1>
-
                 <Aphorism className="mt-8 mb-12" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 mb-12">
@@ -77,9 +88,21 @@ export default function Home() {
                         href="https://linkedin.com/in/neil-lunavat"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 transition-colors duration-200"
+                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 hover:scale-[1.05] transition-all duration-200"
                     >
-                        Connect on LinkedIn
+                        <GradientText
+                            colors={[
+                                "#8DE5FF",
+                                "#A0B8FF",
+                                "#BFA0FF",
+                                "#8DE5FF",
+                            ]}
+                            animationSpeed={3}
+                            showBorder={false}
+                            className="custom-class"
+                        >
+                            Connect on LinkedIn
+                        </GradientText>
                     </Link>
                 </div>
             </div>
