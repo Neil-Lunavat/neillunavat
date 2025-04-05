@@ -14,6 +14,22 @@ export default function Header() {
                 </div>
                 <nav className="hidden md:flex space-x-8">
                     <Link
+                        href="https://github.com/Neil-Lunavat"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200"
+                    >
+                        GitHub
+                    </Link>
+                    <Link
+                        href="https://www.instagram.com/uhh_neil"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200"
+                    >
+                        Instagram
+                    </Link>
+                    <Link
                         href="https://linkedin.com/in/neil-lunavat"
                         target="_blank"
                         rel="noopener noreferrer"

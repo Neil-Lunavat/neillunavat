@@ -2,6 +2,7 @@ import Link from "next/link";
 import SpotlightCard from "@/components/ui/spotlight-card";
 import Aphorism from "@/components/ui/aphorisms";
 import ShinyText from "@/components/ui/shinytext";
+import { motion } from "framer-motion";
 
 export default function Home() {
     return (
