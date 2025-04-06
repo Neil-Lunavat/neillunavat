@@ -1,6 +1,7 @@
 import "./global.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
     title: "Neil Lunavat | Renaissance of AI Automation",
@@ -19,6 +20,7 @@ export default function RootLayout({
                 <Header />
                 <main className="flex-grow">{children}</main>
                 <Footer />
+                <Analytics />
             </body>
         </html>
     );
