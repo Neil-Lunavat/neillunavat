@@ -20,7 +20,7 @@ export default function Home() {
                     />
                 </div>
 
-                <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 gradient-text">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 gradient-text">
                     <DecryptedText
                         text="Helping People Build"
                         speed={80}
@@ -28,11 +28,10 @@ export default function Home() {
                         sequential={true}
                         animateOn="view"
                         useOriginalCharsOnly={true}
-                        className="font-light"
                     />
                     <DecryptedText
                         text="Extraordinary Things"
-                        className="mt-2 font-bold"
+                        className="mt-2"
                         speed={90}
                         maxIterations={50}
                         sequential={true}
