@@ -29,6 +29,7 @@ export default function Home() {
                         animateOn="view"
                         useOriginalCharsOnly={true}
                     />
+                    <br></br>
                     <DecryptedText
                         text="Extraordinary Things"
                         className="mt-2"
