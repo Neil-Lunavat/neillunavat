@@ -35,9 +35,16 @@ export default function Header() {
                 <div className="flex items-center z-50">
                     <Link
                         href="/"
-                        className="text-xl md:text-2xl font-semibold tracking-wider"
+                        className="flex items-center text-xl md:text-2xl font-semibold tracking-wider"
                     >
-                        NEIL LUNAVAT
+                        <img
+                            src="/logo.webp"
+                            alt="Neil Lunavat Logo"
+                            width="60"
+                            height="60"
+                            className="mr-2"
+                        />
+                        <span className="hidden md:block">NEIL LUNAVAT</span>
                     </Link>
                 </div>
 
