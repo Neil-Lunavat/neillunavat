@@ -3,7 +3,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import SpotlightCard from "@/components/ui/spotlight-card";
 import Aphorism from "@/components/ui/aphorisms";
-import ShinyText from "@/components/ui/shinytext";
 import GradientText from "@/components/ui/gradienttext";
 import DecryptedText from "@/components/ui/decrypted-text";
 
@@ -11,15 +10,6 @@ export default function Home() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen px-6 py-24 md:py-0">
             <div className="max-w-5xl mx-auto text-center">
-                <div className="inline-block mb-10 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-zinc-800 text-zinc-300 text-s tracking-widest uppercase">
-                    <ShinyText
-                        text="Under Construction"
-                        disabled={false}
-                        speed={3}
-                        className="custom-class"
-                    />
-                </div>
-
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 gradient-text">
                     <DecryptedText
                         text="Helping People Build"
@@ -107,7 +97,10 @@ export default function Home() {
                     </motion.div>
                 </div>
 
-                <div className="mt-12">
+                <div
+                    className="mt-12 flex flex-col md:flex-row gap-4 justify-center items-center"
+                    style={{ marginRight: "16px" }}
+                >
                     <Link
                         href="https://linkedin.com/in/neil-lunavat"
                         target="_blank"
@@ -126,6 +119,20 @@ export default function Home() {
                             className="custom-class"
                         >
                             Connect on LinkedIn
+                        </GradientText>
+                    </Link>
+                    <Link
+                        href="/the-mindset-revolution"
+                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 hover:scale-[1.05] transition-all duration-200"
+                    >
+                        <GradientText
+                            colors={["#FF5E62", "#FF9966", "#FF5E62"]}
+                            animationSpeed={3}
+                            showBorder={false}
+                            className="custom-class"
+                        >
+                            Read Latest Blog{" "}
+                            <span className="inline-block ml-1">↗</span>
                         </GradientText>
                     </Link>
                 </div>
