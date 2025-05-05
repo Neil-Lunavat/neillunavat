@@ -10,6 +10,7 @@ interface TooltipProps {
     pronunciation?: string;
     imageUrl?: string;
     imageAlt?: string;
+    preloadedImage?: HTMLImageElement; // New prop for preloaded image
 }
 
 export default function Tooltip({
@@ -19,14 +20,32 @@ export default function Tooltip({
     pronunciation,
     imageUrl,
     imageAlt,
+    preloadedImage,
 }: TooltipProps) {
     const [isVisible, setIsVisible] = useState(false);
     const [isLeaving, setIsLeaving] = useState(false);
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [isImageLoaded, setIsImageLoaded] = useState(
+        preloadedImage ? true : false
+    );
     const tooltipRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLSpanElement>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [position, setPosition] = useState({ top: 0, left: 0 });
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detect if the device is mobile
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+
+        return () => {
+            window.removeEventListener("resize", checkMobile);
+        };
+    }, []);
 
     // Calculate and set the tooltip position
     const updatePosition = () => {
@@ -98,6 +117,8 @@ export default function Tooltip({
     }, [isVisible, isImageLoaded]);
 
     const handleMouseEnter = () => {
+        if (isMobile) return; // Skip for mobile devices
+
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
         }
@@ -106,6 +127,8 @@ export default function Tooltip({
     };
 
     const handleMouseLeave = () => {
+        if (isMobile) return; // Skip for mobile devices
+
         setIsLeaving(true);
         timeoutRef.current = setTimeout(() => {
             setIsVisible(false);
@@ -114,6 +137,8 @@ export default function Tooltip({
     };
 
     const handleTooltipMouseEnter = () => {
+        if (isMobile) return; // Skip for mobile devices
+
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
         }
@@ -121,6 +146,8 @@ export default function Tooltip({
     };
 
     const handleTooltipMouseLeave = () => {
+        if (isMobile) return; // Skip for mobile devices
+
         setIsLeaving(true);
         timeoutRef.current = setTimeout(() => {
             setIsVisible(false);
@@ -129,6 +156,26 @@ export default function Tooltip({
     };
 
     const handleClick = () => {
+        if (isMobile) {
+            // For mobile, toggle the tooltip visibility
+            setIsVisible(!isVisible);
+            if (isVisible) {
+                setIsLeaving(true);
+                timeoutRef.current = setTimeout(() => {
+                    setIsVisible(false);
+                    setIsLeaving(false);
+                }, 300);
+            } else {
+                setIsLeaving(false);
+            }
+        } else if (link) {
+            // For desktop, navigate to link
+            window.open(link, "_blank");
+        }
+    };
+
+    const handleLearnMoreClick = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent tooltip from closing
         if (link) {
             window.open(link, "_blank");
         }
@@ -146,7 +193,9 @@ export default function Tooltip({
                 onClick={handleClick}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="cursor-pointer border-b border-dotted border-zinc-500"
+                className={`cursor-pointer border-b border-dotted border-zinc-500 ${
+                    isMobile ? "active:text-zinc-400" : ""
+                }`}
             >
                 {typeof children === "string" ? (
                     <ShinyText text={children} />
@@ -160,6 +209,7 @@ export default function Tooltip({
                     ref={tooltipRef}
                     onMouseEnter={handleTooltipMouseEnter}
                     onMouseLeave={handleTooltipMouseLeave}
+                    onClick={isMobile ? (e) => e.stopPropagation() : undefined}
                     className="fixed z-50 w-64 md:w-80 bg-black/80 backdrop-blur-sm text-zinc-200 rounded-xl shadow-lg p-4 border border-zinc-800"
                     style={{
                         maxWidth: "calc(100vw - 16px)",
@@ -198,6 +248,15 @@ export default function Tooltip({
                     <div className="text-sm text-zinc-300 font-garamond">
                         {definition}
                     </div>
+
+                    {isMobile && link && (
+                        <div
+                            className="mt-3 text-sm text-center text-blue-400 border border-blue-900/50 rounded-md py-2 active:bg-blue-950/50"
+                            onClick={handleLearnMoreClick}
+                        >
+                            Click here to learn more
+                        </div>
+                    )}
                 </div>
             )}
         </span>

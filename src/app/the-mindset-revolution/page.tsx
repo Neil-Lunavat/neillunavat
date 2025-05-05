@@ -1,14 +1,70 @@
 "use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import GradientText from "@/components/ui/gradienttext";
 import Tooltip from "@/components/ui/tooltip";
+import SideNavigation from "@/components/SideNavigation";
 
 export default function MindsetRevolution() {
+    const [preloadedImages, setPreloadedImages] = useState<
+        Record<string, HTMLImageElement | null>
+    >({
+        alex: null,
+        hydra: null,
+        sam: null,
+        varun: null,
+        jordan: null,
+        maps: null,
+    });
+
+    const [imagesLoaded, setImagesLoaded] = useState(false);
+
+    // Preload all images
+    useEffect(() => {
+        const imagePaths = {
+            alex: "/alex.webp",
+            hydra: "/hydra.webp",
+            sam: "/sam.webp",
+            varun: "/varun.jpg",
+            jordan: "/jordan.jpg",
+            maps: "/maps.jpg",
+        };
+
+        const preloadedImgs: Record<string, HTMLImageElement> = {};
+        let loadedCount = 0;
+
+        Object.entries(imagePaths).forEach(([key, path]) => {
+            const img = new Image();
+            img.src = path;
+            img.onload = () => {
+                preloadedImgs[key] = img;
+                loadedCount++;
+
+                if (loadedCount === Object.keys(imagePaths).length) {
+                    setPreloadedImages(preloadedImgs);
+                    setImagesLoaded(true);
+                    console.log("All tooltip images preloaded");
+                }
+            };
+            img.onerror = (err) => {
+                console.error(`Failed to load image: ${path}`, err);
+                loadedCount++;
+
+                if (loadedCount === Object.keys(imagePaths).length) {
+                    setPreloadedImages(preloadedImgs);
+                    setImagesLoaded(true);
+                }
+            };
+        });
+    }, []);
+
     return (
         <div className="flex flex-col items-center min-h-screen px-6 py-24">
+            <SideNavigation />
+
             <motion.div
-                className="max-w-4xl mx-auto"
+                className="max-w-4xl mx-auto "
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -26,7 +82,10 @@ export default function MindsetRevolution() {
                 </h2>
 
                 <article className="mt-12 text-zinc-200 leading-relaxed text-lg space-y-6">
-                    <section className="space-y-4">
+                    <section
+                        id="transformative-realization"
+                        className="space-y-4"
+                    >
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             The Transformative Realization
                         </h3>
@@ -54,6 +113,9 @@ export default function MindsetRevolution() {
                                 pronunciation="hor-mo-zi"
                                 imageUrl="/alex.webp"
                                 imageAlt="Alex Hormozi portrait"
+                                preloadedImage={
+                                    preloadedImages.alex || undefined
+                                }
                             >
                                 Alex Hormozi
                             </Tooltip>
@@ -75,6 +137,9 @@ export default function MindsetRevolution() {
                                 pronunciation="hahy-druh"
                                 imageUrl="/hydra.webp"
                                 imageAlt="Mythological Hydra monster"
+                                preloadedImage={
+                                    preloadedImages.hydra || undefined
+                                }
                             >
                                 Hydra
                             </Tooltip>
@@ -123,7 +188,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="learning-journey" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             From Zero to Full-Stack: My Learning Journey
                         </h3>
@@ -190,7 +255,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="hard-vs-unfamiliar" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             The Fundamental Distinction: Hard vs. Unfamiliar
                         </h3>
@@ -281,7 +346,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="ai-revolution" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             God in a Box: The AI Revolution in Learning
                         </h3>
@@ -363,7 +428,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="information-exposure" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             The Information Exposure Rate (Goldilocks Zone)
                         </h3>
@@ -436,7 +501,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="asymmetric-advantage" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             The Asymmetric Advantage in 2025
                         </h3>
@@ -491,7 +556,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="professional-skills" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             Shifting Landscape of Professional Skills
                         </h3>
@@ -502,6 +567,9 @@ export default function MindsetRevolution() {
                                 link="https://en.wikipedia.org/wiki/Sam_Altman"
                                 imageUrl="/sam.webp"
                                 imageAlt="Sam Altman portrait"
+                                preloadedImage={
+                                    preloadedImages.sam || undefined
+                                }
                             >
                                 Sam Altman
                             </Tooltip>{" "}
@@ -511,6 +579,9 @@ export default function MindsetRevolution() {
                                 link="https://www.google.com/search?q=varun+mayya"
                                 imageUrl="/varun.jpg"
                                 imageAlt="Varun Mayya portrait"
+                                preloadedImage={
+                                    preloadedImages.varun || undefined
+                                }
                             >
                                 Varun Mayya
                             </Tooltip>{" "}
@@ -580,7 +651,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="domain-flexibility" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             Domain Flexibility: Beyond Tech Skills
                         </h3>
@@ -630,6 +701,9 @@ export default function MindsetRevolution() {
                                 link="https://www.google.com/search?q=jordan+peterson"
                                 imageUrl="/jordan.jpg"
                                 imageAlt="Jordan Peterson portrait"
+                                preloadedImage={
+                                    preloadedImages.jordan || undefined
+                                }
                             >
                                 Jordan Peterson
                             </Tooltip>
@@ -639,6 +713,9 @@ export default function MindsetRevolution() {
                                 link="https://www.youtube.com/watch?v=I8Xc2_FtpHI&list=PLsvFdgT3ETgAVZWj0faD0sDJhJh2NeZwe"
                                 imageUrl="/maps.jpg"
                                 imageAlt="Maps of Meaning book cover"
+                                preloadedImage={
+                                    preloadedImages.maps || undefined
+                                }
                             >
                                 Maps of Meaning
                             </Tooltip>{" "}
@@ -655,7 +732,7 @@ export default function MindsetRevolution() {
                         </div>
                     </section>
 
-                    <section className="space-y-4">
+                    <section id="conclusion" className="space-y-4">
                         <h3 className="text-2xl font-semibold text-zinc-100">
                             Conclusion & Preview
                         </h3>
