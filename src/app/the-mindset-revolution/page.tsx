@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import GradientText from "@/components/ui/gradienttext";
 import Tooltip from "@/components/ui/tooltip";
-import SideNavigation from "@/components/SideNavigation";
 
 export default function MindsetRevolution() {
     const [preloadedImages, setPreloadedImages] = useState<
@@ -61,8 +60,6 @@ export default function MindsetRevolution() {
 
     return (
         <div className="flex flex-col items-center min-h-screen px-6 py-24">
-            <SideNavigation />
-
             <motion.div
                 className="max-w-4xl mx-auto "
                 initial={{ opacity: 0, y: 20 }}
