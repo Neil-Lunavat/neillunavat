@@ -27,6 +27,11 @@ export default function Header() {
             href: "https://github.com/neil-lunavat",
             external: true,
         },
+        {
+            name: "Blog",
+            href: "/the-mindset-revolution",
+            external: false,
+        },
     ];
 
     return (

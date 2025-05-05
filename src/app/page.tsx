@@ -47,12 +47,16 @@ export default function Home() {
                                 The Vision
                             </h2>
                             <p className="text-zinc-300 leading-relaxed">
-                                In a world racing toward AI integration, the
-                                divide grows between those who adapt and those
-                                left behind. Follow along as I build an agency
-                                from scratch that creates systems of
-                                liberation—automation that frees human potential
-                                rather than diminishing it.
+                                In a world where information grows
+                                exponentially, the divide widens between those
+                                who can harness it and those overwhelmed by it.
+                                I explore the intersection of human cognition
+                                and artificial intelligence—creating frameworks
+                                that amplify our innate capabilities rather than
+                                replacing them. This isn't about technology
+                                alone, but about the renaissance of human
+                                potential through transformative cognitive
+                                acceleration.
                             </p>
                         </SpotlightCard>
                     </motion.div>
@@ -68,28 +72,28 @@ export default function Home() {
                     >
                         <SpotlightCard className="text-left p-8">
                             <h2 className="text-2xl font-medium mb-4">
-                                What&apos;s Coming
+                                Current Explorations
                             </h2>
                             <ul className="space-y-3 text-zinc-300">
                                 <li className="flex items-start">
                                     <span className="opacity-50 mr-2">→</span>
                                     <span>
-                                        Frameworks for AI integration that
-                                        preserve human ingenuity
+                                        Cognitive frameworks that transform
+                                        unfamiliarity into capability
                                     </span>
                                 </li>
                                 <li className="flex items-start">
                                     <span className="opacity-50 mr-2">→</span>
                                     <span>
-                                        A manifesto for the generalist in an age
-                                        of dying specialization
+                                        The polymath advantage in an age of
+                                        hyper-specialization
                                     </span>
                                 </li>
                                 <li className="flex items-start">
                                     <span className="opacity-50 mr-2">→</span>
                                     <span>
-                                        Tools that transform how we think about
-                                        productivity
+                                        Mental models for accelerated learning
+                                        across any domain
                                     </span>
                                 </li>
                             </ul>
