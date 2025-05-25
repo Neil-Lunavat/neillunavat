@@ -1,45 +1,136 @@
 @import "tailwindcss";
 
+/* Crimson Pro Font Faces */
 @font-face {
-    font-family: "EBGaramond";
-    src: url("/fonts/EBGaramond-Regular.ttf") format("truetype");
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-Regular.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "EBGaramond";
-    src: url("/fonts/EBGaramond-Medium.ttf") format("truetype");
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-Medium.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "EBGaramond";
-    src: url("/fonts/EBGaramond-SemiBold.ttf") format("truetype");
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-SemiBold.ttf") format("truetype");
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "EBGaramond";
-    src: url("/fonts/EBGaramond-Bold.ttf") format("truetype");
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-Bold.ttf") format("truetype");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "EBGaramond";
-    src: url("/fonts/EBGaramond-Italic.ttf") format("truetype");
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-ExtraBold.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "CrimsonPro";
+    src: url("/fonts/CrimsonPro-Italic.ttf") format("truetype");
     font-weight: 400;
     font-style: italic;
     font-display: swap;
 }
 
+/* Outfit Font Faces */
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-Thin.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-ExtraLight.ttf") format("truetype");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-ExtraBold.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("/fonts/Outfit-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Animations */
 @keyframes shine {
     0% {
         background-position: 100%;
@@ -69,6 +160,7 @@
     animation: gradient 1s linear infinite;
 }
 
+/* CSS Variables */
 :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -77,17 +169,28 @@
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-    --font-garamond: "EBGaramond", serif;
+    --font-crimson: "CrimsonPro", serif;
+    --font-outfit: "Outfit", sans-serif;
 }
 
+/* Body Styles */
 body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "EBGaramond", serif;
+    font-family: "CrimsonPro", serif; /* Default to Crimson Pro for body text */
     overflow-x: hidden;
 }
-/* Find this section in your global.css file and replace it with this updated code */
 
+/* Typography Classes */
+.font-crimson {
+    font-family: "CrimsonPro", serif;
+}
+
+.font-outfit {
+    font-family: "Outfit", sans-serif;
+}
+
+/* Background Styles */
 .dotted-bg {
     position: relative;
     background-image: url("/background2.webp");
@@ -103,49 +206,44 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.35); /* 35% black overlay */
+    background-color: rgba(0, 0, 0, 0.35);
     z-index: -1;
 }
 
-/* Apply to both mobile and medium-sized devices */
 @media (max-width: 1200px) {
     .dotted-bg {
         position: relative;
         background-attachment: scroll;
-        background-image: none; /* Remove background from the main element */
-        background-color: #000000; /* Pure black background to match image */
+        background-image: none;
+        background-color: #000000;
     }
 
-    /* Show background only on the top portion */
     .dotted-bg::before {
         content: "";
-        position: absolute; /* Changed from fixed to absolute */
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 50vh; /* Only cover top half of viewport height */
+        height: 50vh;
         background-image: url("/background2.webp");
         background-size: cover;
-        background-position: top center; /* Focus on top portion of image */
+        background-position: top center;
         z-index: -1;
     }
 
-    /* Add a gradient fade out at the bottom of the background */
     .dotted-bg::after {
         content: "";
-        position: absolute; /* Changed from fixed to absolute */
-        top: 45vh; /* Start slightly above the halfway point */
+        position: absolute;
+        top: 45vh;
         left: 0;
         width: 100%;
         height: 15vh;
-        background: linear-gradient(
-            to bottom,
-            transparent,
-            #000000
-        ); /* Pure black to match image */
+        background: linear-gradient(to bottom, transparent, #000000);
         z-index: -1;
     }
 }
+
+/* Utility Classes */
 .gradient-text {
     background: linear-gradient(to right, #c4c1c1, #a8a8a8);
     -webkit-background-clip: text;
@@ -164,8 +262,8 @@ body {
     position: relative;
     opacity: 0.5;
 }
-/* Add this to your global.css file */
 
+/* Tooltip Animations */
 @keyframes tooltipFadeInUp {
     from {
         opacity: 0;
