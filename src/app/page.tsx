@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen px-6 py-24 md:py-0">
             <div className="max-w-5xl mx-auto text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 gradient-text">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight mb-6 gradient-text font-crimson">
                     <DecryptedText
                         text="Helping People Build"
                         speed={80}
@@ -43,10 +43,10 @@ export default function Home() {
                         }}
                     >
                         <SpotlightCard className="text-left p-8">
-                            <h2 className="text-2xl font-medium mb-3">
+                            <h2 className="text-2xl font-medium mb-3 font-crimson">
                                 The Vision
                             </h2>
-                            <p className="text-zinc-300 leading-relaxed">
+                            <p className="text-zinc-300 leading-relaxed font-crimson">
                                 In a world where information grows
                                 exponentially, the divide widens between those
                                 who can harness it and those overwhelmed by it.
@@ -71,10 +71,10 @@ export default function Home() {
                         }}
                     >
                         <SpotlightCard className="text-left p-8">
-                            <h2 className="text-2xl font-medium mb-4">
+                            <h2 className="text-2xl font-medium mb-4 font-crimson">
                                 Current Explorations
                             </h2>
-                            <ul className="space-y-3 text-zinc-300">
+                            <ul className="space-y-3 text-zinc-300 font-crimson">
                                 <li className="flex items-start">
                                     <span className="opacity-50 mr-2">→</span>
                                     <span>
@@ -109,7 +109,7 @@ export default function Home() {
                         href="https://linkedin.com/in/neil-lunavat"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 hover:scale-[1.05] transition-all duration-200"
+                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 hover:scale-[1.05] transition-all duration-200 font-outfit"
                     >
                         <GradientText
                             colors={[
@@ -127,7 +127,7 @@ export default function Home() {
                     </Link>
                     <Link
                         href="/the-mindset-revolution"
-                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 hover:scale-[1.05] transition-all duration-200"
+                        className="inline-flex items-center justify-center px-8 py-3 border border-zinc-700 rounded-md text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 hover:scale-[1.05] transition-all duration-200 font-outfit"
                     >
                         <GradientText
                             colors={["#FF5E62", "#FF9966", "#FF5E62"]}

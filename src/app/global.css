@@ -173,11 +173,11 @@
     --font-outfit: "Outfit", sans-serif;
 }
 
-/* Body Styles */
+/* Body Styles - Default to Crimson Pro for content */
 body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "CrimsonPro", serif; /* Default to Crimson Pro for body text */
+    font-family: "CrimsonPro", serif;
     overflow-x: hidden;
 }
 
@@ -187,6 +187,15 @@ body {
 }
 
 .font-outfit {
+    font-family: "Outfit", sans-serif;
+}
+
+/* Font Strategy Classes */
+.content-text {
+    font-family: "CrimsonPro", serif;
+}
+
+.ui-text {
     font-family: "Outfit", sans-serif;
 }
 

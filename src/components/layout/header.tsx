@@ -40,7 +40,7 @@ export default function Header() {
                 <div className="flex items-center z-50">
                     <Link
                         href="/"
-                        className="flex items-center text-xl md:text-2xl font-semibold tracking-wider"
+                        className="flex items-center text-xl md:text-2xl font-semibold tracking-wider font-crimson"
                     >
                         <img
                             src="/logo.webp"
@@ -59,7 +59,7 @@ export default function Header() {
                         href="https://linkedin.com/in/neil-lunavat"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200"
+                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
                     >
                         LinkedIn
                     </Link>
@@ -67,7 +67,7 @@ export default function Header() {
                         href="https://instagram.com/uhh_neil"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200"
+                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
                     >
                         Instagram
                     </Link>
@@ -75,7 +75,7 @@ export default function Header() {
                         href="https://github.com/neil-lunavat"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200"
+                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
                     >
                         GitHub
                     </Link>
@@ -148,7 +148,7 @@ export default function Header() {
                                                     : ""
                                             }
                                             onClick={() => setIsMenuOpen(false)}
-                                            className="text-2xl uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200"
+                                            className="text-2xl uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
                                         >
                                             {item.name}
                                         </Link>

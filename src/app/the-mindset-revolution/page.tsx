@@ -66,7 +66,7 @@ export default function MindsetRevolution() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
-                <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center">
+                <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center font-crimson">
                     <GradientText
                         colors={["#FF5E62", "#FF9966", "#FF5E62"]}
                         className="text-4xl sm:text-5xl font-bold"
@@ -74,16 +74,16 @@ export default function MindsetRevolution() {
                         It's Not Hard, You're Just Unfamiliar With It
                     </GradientText>
                 </h1>
-                <h2 className="text-3xl font-medium mb-6 text-center text-zinc-300">
+                <h2 className="text-3xl font-medium mb-6 text-center text-zinc-300 font-outfit">
                     The Mindset Revolution
                 </h2>
 
-                <article className="mt-12 text-zinc-200 leading-relaxed text-lg space-y-6">
+                <article className="mt-12 text-zinc-200 leading-relaxed text-lg space-y-6 font-crimson">
                     <section
                         id="transformative-realization"
                         className="space-y-4"
                     >
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             The Transformative Realization
                         </h3>
 
@@ -186,7 +186,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="learning-journey" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             From Zero to Full-Stack: My Learning Journey
                         </h3>
 
@@ -253,7 +253,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="hard-vs-unfamiliar" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             The Fundamental Distinction: Hard vs. Unfamiliar
                         </h3>
 
@@ -344,7 +344,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="ai-revolution" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             God in a Box: The AI Revolution in Learning
                         </h3>
 
@@ -426,7 +426,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="information-exposure" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             The Information Exposure Rate (Goldilocks Zone)
                         </h3>
 
@@ -499,7 +499,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="asymmetric-advantage" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             The Asymmetric Advantage in 2025
                         </h3>
 
@@ -554,7 +554,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="professional-skills" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             Shifting Landscape of Professional Skills
                         </h3>
 
@@ -649,7 +649,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="domain-flexibility" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             Domain Flexibility: Beyond Tech Skills
                         </h3>
 
@@ -730,7 +730,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <section id="conclusion" className="space-y-4">
-                        <h3 className="text-2xl font-semibold text-zinc-100">
+                        <h3 className="text-2xl font-semibold text-zinc-100 font-crimson">
                             Conclusion & Preview
                         </h3>
 
@@ -785,7 +785,7 @@ export default function MindsetRevolution() {
                     </section>
 
                     <div className="pt-8 border-t border-zinc-800 text-center mt-12">
-                        <div className="text-zinc-400 italic mb-4">
+                        <div className="text-zinc-400 italic mb-4 font-outfit">
                             This is the first post in a three-part series on
                             accelerated learning in the AI age. Stay tuned for
                             my next blog: "The Cognitive Framework."
@@ -793,7 +793,7 @@ export default function MindsetRevolution() {
 
                         <Link
                             href="/"
-                            className="inline-flex items-center justify-center px-6 py-2 border border-zinc-700 rounded-md text-sm uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 transition-all duration-200"
+                            className="inline-flex items-center justify-center px-6 py-2 border border-zinc-700 rounded-md text-sm uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 transition-all duration-200 font-outfit"
                         >
                             <GradientText
                                 colors={[

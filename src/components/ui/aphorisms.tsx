@@ -45,7 +45,7 @@ const Aphorism: React.FC<AphorismProps> = ({
     return (
         <div className={`my-6 ${className}`}>
             <p
-                className={`quote-text text-lg md:text-xl text-zinc-300 italic transition-opacity duration-500 ${
+                className={`quote-text text-lg md:text-xl text-zinc-300 italic transition-opacity duration-500 font-outfit ${
                     isVisible ? "opacity-100" : "opacity-0"
                 }`}
             >
