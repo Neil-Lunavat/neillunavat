@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
@@ -42,17 +43,18 @@ export default function Header() {
                         href="/"
                         className="flex items-center text-xl md:text-2xl font-semibold tracking-wider font-crimson"
                     >
-                        <img
+                        {" "}
+                        <Image
                             src="/logo.webp"
                             alt="Neil Lunavat Logo"
-                            width="60"
-                            height="60"
+                            width={60}
+                            height={60}
                             className="mr-2"
+                            priority
                         />
                         <span className="hidden md:block">NEIL LUNAVAT</span>
                     </Link>
                 </div>
-
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex space-x-8">
                     <Link
@@ -79,13 +81,14 @@ export default function Header() {
                     >
                         GitHub
                     </Link>
-                </nav>
-
+                </nav>{" "}
                 {/* Hamburger Button */}
                 <button
-                    className="md:hidden z-50 flex flex-col justify-center items-center"
+                    className="md:hidden z-50 flex flex-col justify-center items-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 hover:bg-white/10 transition-colors duration-200"
                     onClick={toggleMenu}
-                    aria-label="Toggle menu"
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={isMenuOpen}
+                    aria-controls="mobile-menu"
                 >
                     <div className="w-7 h-7 flex flex-col justify-center items-center">
                         <motion.span
@@ -113,7 +116,6 @@ export default function Header() {
                         ></motion.span>
                     </div>
                 </button>
-
                 {/* Mobile Menu */}
                 <AnimatePresence>
                     {isMenuOpen && (
@@ -122,7 +124,8 @@ export default function Header() {
                             animate={{ opacity: 1, height: "100vh" }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="fixed inset-0 bg-black/90 backdrop-blur-md z-40 flex flex-col items-center justify-center md:hidden"
+                            id="mobile-menu"
+                            className="fixed inset-0 bg-black/95 backdrop-blur-lg z-40 flex flex-col items-center justify-center md:hidden"
                         >
                             <motion.nav
                                 initial={{ opacity: 0 }}

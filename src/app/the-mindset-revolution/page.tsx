@@ -17,9 +17,7 @@ export default function MindsetRevolution() {
         maps: null,
     });
 
-    const [imagesLoaded, setImagesLoaded] = useState(false);
-
-    // Preload all images
+    const [imagesLoaded, setImagesLoaded] = useState(false); // Preload all images with better error handling and performance
     useEffect(() => {
         const imagePaths = {
             alex: "/alex.webp",
@@ -32,29 +30,34 @@ export default function MindsetRevolution() {
 
         const preloadedImgs: Record<string, HTMLImageElement> = {};
         let loadedCount = 0;
+        const totalImages = Object.keys(imagePaths).length;
 
-        Object.entries(imagePaths).forEach(([key, path]) => {
-            const img = new Image();
-            img.src = path;
-            img.onload = () => {
-                preloadedImgs[key] = img;
-                loadedCount++;
+        // Use Promise.all for more efficient loading
+        const loadPromises = Object.entries(imagePaths).map(([key, path]) => {
+            return new Promise<void>((resolve) => {
+                const img = new Image();
+                img.src = path;
+                img.loading = "lazy"; // Enable lazy loading
+                img.decoding = "async"; // Enable async decoding
 
-                if (loadedCount === Object.keys(imagePaths).length) {
-                    setPreloadedImages(preloadedImgs);
-                    setImagesLoaded(true);
-                    console.log("All tooltip images preloaded");
-                }
-            };
-            img.onerror = (err) => {
-                console.error(`Failed to load image: ${path}`, err);
-                loadedCount++;
+                img.onload = () => {
+                    preloadedImgs[key] = img;
+                    loadedCount++;
+                    resolve();
+                };
 
-                if (loadedCount === Object.keys(imagePaths).length) {
-                    setPreloadedImages(preloadedImgs);
-                    setImagesLoaded(true);
-                }
-            };
+                img.onerror = (err) => {
+                    console.error(`Failed to load image: ${path}`, err);
+                    loadedCount++;
+                    resolve(); // Resolve anyway to not block other images
+                };
+            });
+        });
+
+        Promise.allSettled(loadPromises).then(() => {
+            setPreloadedImages(preloadedImgs);
+            setImagesLoaded(true);
+            console.log(`Loaded ${loadedCount}/${totalImages} tooltip images`);
         });
     }, []);
 
@@ -66,10 +69,10 @@ export default function MindsetRevolution() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
-                <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center font-crimson">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-center font-crimson px-2">
                     <GradientText
                         colors={["#FF5E62", "#FF9966", "#FF5E62"]}
-                        className="text-4xl sm:text-5xl font-bold"
+                        className="text-3xl sm:text-4xl lg:text-5xl font-bold"
                     >
                         It's Not Hard, You're Just Unfamiliar With It
                     </GradientText>

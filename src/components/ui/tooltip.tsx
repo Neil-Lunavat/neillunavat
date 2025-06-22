@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import ShinyText from "./shinytext";
 import Image from "next/image";
 
@@ -45,10 +45,8 @@ export default function Tooltip({
         return () => {
             window.removeEventListener("resize", checkMobile);
         };
-    }, []);
-
-    // Calculate and set the tooltip position
-    const updatePosition = () => {
+    }, []); // Calculate and set the tooltip position
+    const updatePosition = useCallback(() => {
         if (!isVisible || !triggerRef.current || !tooltipRef.current) return;
 
         const triggerRect = triggerRef.current.getBoundingClientRect();
@@ -76,7 +74,7 @@ export default function Tooltip({
                 : left;
 
         setPosition({ top: finalTop, left: finalLeft });
-    };
+    }, [isVisible, imageUrl]);
 
     // Initial positioning when tooltip becomes visible
     useEffect(() => {
@@ -84,7 +82,7 @@ export default function Tooltip({
             // Small delay to ensure the DOM is ready
             setTimeout(updatePosition, 10);
         }
-    }, [isVisible, isImageLoaded]);
+    }, [isVisible, isImageLoaded, updatePosition]);
 
     // Clear timeout on unmount
     useEffect(() => {
@@ -93,9 +91,7 @@ export default function Tooltip({
                 clearTimeout(timeoutRef.current);
             }
         };
-    }, []);
-
-    // Reposition the tooltip on scroll and resize
+    }, []); // Reposition the tooltip on scroll and resize
     useEffect(() => {
         if (!isVisible) return;
 
@@ -114,7 +110,7 @@ export default function Tooltip({
             window.removeEventListener("scroll", handleScrollOrResize);
             window.removeEventListener("resize", handleScrollOrResize);
         };
-    }, [isVisible, isImageLoaded]);
+    }, [isVisible, isImageLoaded, updatePosition]);
 
     const handleMouseEnter = () => {
         if (isMobile) return; // Skip for mobile devices
@@ -188,14 +184,29 @@ export default function Tooltip({
 
     return (
         <span className="relative inline-block">
+            {" "}
             <span
                 ref={triggerRef}
                 onClick={handleClick}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className={`cursor-pointer border-b border-dotted border-zinc-500 ${
-                    isMobile ? "active:text-zinc-400" : ""
-                }`}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleClick();
+                    }
+                    if (e.key === "Escape" && isVisible) {
+                        setIsVisible(false);
+                        setIsLeaving(false);
+                    }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-expanded={isVisible}
+                aria-describedby={isVisible ? "tooltip-content" : undefined}
+                className={`cursor-pointer border-b border-dotted border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 rounded-sm ${
+                    isMobile ? "active:text-zinc-400" : "hover:text-zinc-300"
+                } transition-colors duration-200`}
             >
                 {typeof children === "string" ? (
                     <ShinyText text={children} />
@@ -203,14 +214,15 @@ export default function Tooltip({
                     children
                 )}
             </span>
-
             {isVisible && (
                 <div
                     ref={tooltipRef}
                     onMouseEnter={handleTooltipMouseEnter}
                     onMouseLeave={handleTooltipMouseLeave}
                     onClick={isMobile ? (e) => e.stopPropagation() : undefined}
-                    className="fixed z-50 w-64 md:w-80 bg-black/80 backdrop-blur-sm text-zinc-200 rounded-xl shadow-lg p-4 border border-zinc-800"
+                    id="tooltip-content"
+                    role="tooltip"
+                    className="fixed z-50 w-64 md:w-80 bg-black/90 backdrop-blur-md text-zinc-200 rounded-xl shadow-2xl p-4 border border-zinc-700"
                     style={{
                         maxWidth: "calc(100vw - 16px)",
                         top: `${position.top}px`,
@@ -221,7 +233,7 @@ export default function Tooltip({
                     }}
                 >
                     <div className="mb-2">
-                        <h4 className="font-semibold text-white text-lg font-garamond">
+                        <h4 className="font-semibold text-white text-lg font-crimson">
                             {children}
                         </h4>
                         {pronunciation && (
@@ -245,7 +257,7 @@ export default function Tooltip({
                         </div>
                     )}
 
-                    <div className="text-sm text-zinc-300 font-garamond">
+                    <div className="text-sm text-zinc-300 font-crimson">
                         {definition}
                     </div>
 

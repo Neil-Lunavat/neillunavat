@@ -7,6 +7,24 @@ export const metadata = {
     title: "Neil Lunavat | Renaissance of AI Automation",
     description:
         "Ushering in the dawn of a new era where AI transforms the landscape of human productivity and redefines the boundaries of possibility.",
+    keywords:
+        "AI automation, productivity, cognitive frameworks, polymath, learning acceleration",
+    authors: [{ name: "Neil Lunavat" }],
+    creator: "Neil Lunavat",
+    publisher: "Neil Lunavat",
+    robots: "index, follow",
+    openGraph: {
+        title: "Neil Lunavat | Renaissance of AI Automation",
+        description:
+            "Ushering in the dawn of a new era where AI transforms the landscape of human productivity and redefines the boundaries of possibility.",
+        type: "website",
+        locale: "en_US",
+    },
+};
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1,
 };
 
 export default function RootLayout({
@@ -16,7 +34,32 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className="min-h-screen flex flex-col dotted-bg">
+            <head>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <meta name="theme-color" content="#0a0a0a" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link
+                    rel="preconnect"
+                    href="https://fonts.gstatic.com"
+                    crossOrigin=""
+                />
+                <link
+                    rel="preload"
+                    href="/background1.webp"
+                    as="image"
+                    type="image/webp"
+                />
+                <link
+                    rel="preload"
+                    href="/logo.webp"
+                    as="image"
+                    type="image/webp"
+                />
+            </head>
+            <body className="min-h-screen flex flex-col dotted-bg antialiased">
                 <Header />
                 <main className="flex-grow">{children}</main>
                 <Footer />
