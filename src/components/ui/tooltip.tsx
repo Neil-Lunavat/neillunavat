@@ -205,7 +205,7 @@ export default function Tooltip({
                 aria-expanded={isVisible}
                 aria-describedby={isVisible ? "tooltip-content" : undefined}
                 className={`cursor-pointer border-b border-dotted border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 rounded-sm ${
-                    isMobile ? "active:text-zinc-400" : "hover:text-zinc-300"
+                    isMobile ? "active:text-zinc-200" : "hover:text-zinc-100"
                 } transition-colors duration-200`}
             >
                 {typeof children === "string" ? (

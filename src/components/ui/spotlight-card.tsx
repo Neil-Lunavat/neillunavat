@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 interface Position {
     x: number;
@@ -45,16 +46,26 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
     const handleMouseLeave = () => {
         setOpacity(0);
     };
-
     return (
-        <div
+        <motion.div
             ref={divRef}
             onMouseMove={handleMouseMove}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={`relative rounded-3xl border border-neutral-800 bg-neutral-900 overflow-hidden p-8 ${className}`}
+            className={`relative overflow-hidden rounded-xl border border-zinc-800 bg-gradient-to-br from-zinc-900/50 to-zinc-800/50 ${className}`}
+            whileHover={{
+                y: -5,
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+            }}
+            transition={{
+                duration: 0.3,
+                ease: "easeOut",
+            }}
+            style={{
+                backdropFilter: "blur(16px)",
+            }}
         >
             <div
                 className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out"
@@ -64,7 +75,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
                 }}
             />
             {children}
-        </div>
+        </motion.div>
     );
 };
 

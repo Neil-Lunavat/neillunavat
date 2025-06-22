@@ -1,6 +1,7 @@
 import "./global.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ScrollToTop from "@/components/ui/scroll-to-top";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
@@ -58,11 +59,12 @@ export default function RootLayout({
                     as="image"
                     type="image/webp"
                 />
-            </head>
+            </head>{" "}
             <body className="min-h-screen flex flex-col dotted-bg antialiased">
                 <Header />
                 <main className="flex-grow">{children}</main>
                 <Footer />
+                <ScrollToTop />
                 <Analytics />
             </body>
         </html>

@@ -188,6 +188,9 @@ html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Enhanced smooth scrolling */
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Account for fixed header */
 }
 
 /* Remove scroll behavior for users who prefer reduced motion */
@@ -241,12 +244,21 @@ html {
 .dotted-bg {
     position: relative;
     min-height: 100vh;
+    background-color: #000000; /* Black background as base */
     background-image: url("/background1.webp");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
+    background-size: 100% auto; /* Full width, height scales automatically */
+    background-position: top center; /* Stick to top */
 }
+
+/* Background Image Strategy:
+ * - Always shows image at full width (100% auto) 
+ * - Sticks to top of viewport (top center)
+ * - Black background (#000000) fills any space below image
+ * - No cropping occurs - entire image width is always visible
+ * - Image height scales proportionally with width
+ */
 
 .dotted-bg::before {
     content: "";
@@ -263,8 +275,8 @@ html {
 @media (max-width: 768px) {
     .dotted-bg {
         background-attachment: scroll; /* Better performance on mobile */
-        background-size: cover;
-        background-position: center;
+        background-size: 100% auto; /* Maintain full width on mobile */
+        background-position: top center;
     }
 
     .dotted-bg::before {
@@ -293,6 +305,8 @@ html {
 @media (min-width: 769px) and (max-width: 1024px) {
     .dotted-bg {
         background-attachment: scroll; /* Better performance on tablets */
+        background-size: 100% auto; /* Keep full width */
+        background-position: top center;
     }
 }
 
@@ -348,6 +362,42 @@ html {
     }
 }
 
+/* Enhanced Text Clipping Utilities */
+.text-gradient {
+    background: linear-gradient(to right, #ffffff, #a8a8a8, #ffffff);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback for browsers that don't support background-clip */
+    animation: gradient-shift 3s linear infinite;
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Ensure text clipping works across all browsers */
+.bg-clip-text {
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+}
+
+.text-transparent {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
 /* Additional Responsive Utilities */
 .container-fluid {
     width: 100%;
@@ -385,13 +435,36 @@ html {
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(4px);
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     font-family: "Outfit", sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
 }
 
 .btn-primary:hover {
     background-color: rgba(0, 0, 0, 0.6);
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary:focus {
@@ -399,23 +472,56 @@ html {
     box-shadow: 0 0 0 2px rgba(161, 161, 170, 0.5);
 }
 
-/* Loading states */
-.loading {
-    opacity: 0.7;
-    pointer-events: none;
+/* Enhanced Microinteractions */
+.card-hover-effect {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.skeleton {
-    background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
-    background-size: 200% 100%;
-    animation: loading 2s infinite;
+.card-hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes loading {
-    0% {
-        background-position: 200% 0;
-    }
+/* Enhanced Loading Animation */
+@keyframes pulse-glow {
+    0%,
     100% {
-        background-position: -200% 0;
+        opacity: 1;
+        transform: scale(1);
     }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Performance Optimizations */
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-auto {
+    will-change: auto;
+}
+
+/* Modern Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }

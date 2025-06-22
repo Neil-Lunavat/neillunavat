@@ -34,54 +34,109 @@ export default function Header() {
             external: false,
         },
     ];
-
     return (
-        <header className="py-6 px-6 md:px-12 backdrop-blur-sm bg-black/30 z-30 relative">
+        <motion.header
+            className="py-6 px-6 md:px-12 backdrop-blur-sm bg-black/30 z-30 relative"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+        >
             <div className="max-w-7xl mx-auto flex justify-between items-center">
-                <div className="flex items-center z-50">
+                <motion.div
+                    className="flex items-center z-50"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                >
                     <Link
                         href="/"
-                        className="flex items-center text-xl md:text-2xl font-semibold tracking-wider font-crimson"
+                        className="flex items-center text-xl md:text-2xl font-semibold tracking-wider font-crimson group"
                     >
-                        {" "}
-                        <Image
-                            src="/logo.webp"
-                            alt="Neil Lunavat Logo"
-                            width={60}
-                            height={60}
-                            className="mr-2"
-                            priority
-                        />
-                        <span className="hidden md:block">NEIL LUNAVAT</span>
+                        <motion.div
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.8, ease: "easeInOut" }}
+                        >
+                            <Image
+                                src="/logo.webp"
+                                alt="Neil Lunavat Logo"
+                                width={60}
+                                height={60}
+                                className="mr-2"
+                                priority
+                            />
+                        </motion.div>{" "}
+                        <motion.span
+                            className="hidden md:block text-gradient"
+                            animate={{
+                                backgroundPosition: [
+                                    "0% 50%",
+                                    "100% 50%",
+                                    "0% 50%",
+                                ],
+                            }}
+                            transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "linear",
+                            }}
+                        >
+                            NEIL LUNAVAT
+                        </motion.span>
                     </Link>
-                </div>
+                </motion.div>{" "}
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex space-x-8">
-                    <Link
-                        href="https://linkedin.com/in/neil-lunavat"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
+                <motion.nav
+                    className="hidden md:flex space-x-8"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                >
+                    <motion.div
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
                     >
-                        LinkedIn
-                    </Link>
-                    <Link
-                        href="https://instagram.com/uhh_neil"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
+                        <Link
+                            href="https://linkedin.com/in/neil-lunavat"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit relative group"
+                        >
+                            LinkedIn
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-blue-600 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
                     >
-                        Instagram
-                    </Link>
-                    <Link
-                        href="https://github.com/neil-lunavat"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
+                        <Link
+                            href="https://instagram.com/uhh_neil"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit relative group"
+                        >
+                            {" "}
+                            Instagram
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-pink-400 to-purple-600 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
                     >
-                        GitHub
-                    </Link>
-                </nav>{" "}
+                        <Link
+                            href="https://github.com/neil-lunavat"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit relative group"
+                        >
+                            GitHub
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gray-400 to-gray-600 group-hover:w-full transition-all duration-300"></span>
+                        </Link>
+                    </motion.div>
+                </motion.nav>
                 {/* Hamburger Button */}
                 <button
                     className="md:hidden z-50 flex flex-col justify-center items-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 hover:bg-white/10 transition-colors duration-200"
@@ -156,12 +211,12 @@ export default function Header() {
                                             {item.name}
                                         </Link>
                                     </motion.div>
-                                ))}
+                                ))}{" "}
                             </motion.nav>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
-        </header>
+        </motion.header>
     );
 }
