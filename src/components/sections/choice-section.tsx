@@ -3,7 +3,7 @@ import TextSection, { textVariants } from "@/components/ui/text-section";
 
 export default function ChoiceSection() {
     return (
-        <section className="min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+        <section className="min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto relative">
             <TextSection className="max-w-4xl text-center">
                 <div className="space-y-6 md:space-y-8">
                     <motion.p

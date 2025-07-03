@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 
 interface LoadingScreenProps {
     onLoadingComplete: () => void;
+    isVisible: boolean;
 }
 
 export default function LoadingScreen({
     onLoadingComplete,
+    isVisible,
 }: LoadingScreenProps) {
-    const [isVisible, setIsVisible] = useState(true);
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -21,9 +22,7 @@ export default function LoadingScreen({
 
         // Start exit animation after 2.3 seconds
         const exitDelay = setTimeout(() => {
-            setIsVisible(false);
-            // Complete loading after fade out animation
-            setTimeout(onLoadingComplete, 500);
+            onLoadingComplete();
         }, 2300); // 2.3 seconds total loading time
 
         return () => clearTimeout(exitDelay);

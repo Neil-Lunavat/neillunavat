@@ -3,6 +3,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import ScrollToTop from "@/components/ui/scroll-to-top";
 import { Analytics } from "@vercel/analytics/react";
+import SmoothScroll from "@/components/ui/smooth-scroll";
 
 export const metadata = {
     title: "Neil Lunavat | Renaissance of AI Automation",
@@ -61,11 +62,13 @@ export default function RootLayout({
                 />
             </head>
             <body className="min-h-screen flex flex-col dotted-bg antialiased">
-                <Header />
-                <main className="flex-grow">{children}</main>
-                <Footer />
-                <ScrollToTop />
-                <Analytics />
+                <SmoothScroll>
+                    <Header />
+                    <main className="flex-grow">{children}</main>
+                    <Footer />
+                    <ScrollToTop />
+                    <Analytics />
+                </SmoothScroll>
             </body>
         </html>
     );

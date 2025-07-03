@@ -20,10 +20,16 @@ export default function ScrollToTop() {
     }, []);
 
     const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
+        // Use Lenis smooth scroll if available, otherwise fallback to native
+        const lenis = (window as any).lenis;
+        if (lenis) {
+            lenis.scrollTo(0);
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
     };
 
     return (

@@ -123,6 +123,7 @@ export default function TiltedCard({
                     style={{
                         width: imageWidth,
                         height: imageHeight,
+                        filter: imageSrc,
                     }}
                 />
 

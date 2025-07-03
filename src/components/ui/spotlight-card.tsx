@@ -57,14 +57,14 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
             className={`relative overflow-hidden rounded-xl border border-zinc-800 bg-gradient-to-br from-zinc-900/50 to-zinc-800/50 ${className}`}
             whileHover={{
                 y: -5,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+                boxShadow: "0 10px 20px -5px rgba(0, 0, 0, 0.5)",
             }}
             transition={{
                 duration: 0.3,
                 ease: "easeOut",
             }}
             style={{
-                backdropFilter: "blur(16px)",
+                backgroundColor: "rgba(0,0,0,0.85)",
             }}
         >
             <div

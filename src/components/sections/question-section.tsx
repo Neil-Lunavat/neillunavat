@@ -56,14 +56,7 @@ export default function QuestionSection() {
             <ImageSection
                 src="/assets/start.jpeg"
                 alt="Start - Hero Image"
-                useTiltedCard={true}
-                customScale={1.7}
-                tiltedCardProps={{
-                    scaleOnHover: 1.05,
-                    rotateAmplitude: 12,
-                    showMobileWarning: false,
-                    showTooltip: false,
-                }}
+                customScale={0.8}
             />
         </section>
     );
