@@ -245,7 +245,7 @@ html {
     position: relative;
     min-height: 100vh;
     background-color: #000000; /* Black background as base */
-    background-image: url("/background1.webp");
+    background-image: url("/background.webp");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% auto; /* Full width, height scales automatically */

@@ -1,307 +1,445 @@
 "use client";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import SpotlightCard from "@/components/ui/spotlight-card";
-import Aphorism from "@/components/ui/aphorisms";
-import GradientText from "@/components/ui/gradienttext";
-import DecryptedText from "@/components/ui/decrypted-text";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import LoadingScreen from "@/components/ui/loading-screen";
+import Image from "next/image";
+
+// Animation variants
+const textVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+};
+
+const imageVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1 },
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2,
+        },
+    },
+};
+
+// Individual section components
+interface TextSectionProps {
+    children: React.ReactNode;
+    align?: "left" | "right";
+    className?: string;
+}
+
+interface ImageSectionProps {
+    src: string;
+    alt: string;
+    className?: string;
+}
+
+const TextSection = ({
+    children,
+    align = "left",
+    className = "",
+}: TextSectionProps) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+    return (
+        <motion.div
+            ref={ref}
+            className={`flex-1 max-w-2xl ${
+                align === "right" ? "text-right" : "text-left"
+            } ${className}`}
+            variants={staggerContainer}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
+const ImageSection = ({ src, alt, className = "" }: ImageSectionProps) => {
+    return (
+        <div className={`flex-1 max-w-xl ${className}`}>
+            <div className="relative w-full h-auto bg-gray-800/20 border border-gray-700/30 rounded-lg overflow-hidden">
+                <Image
+                    src={src}
+                    alt={alt}
+                    width={600}
+                    height={450}
+                    className="object-contain w-full h-auto"
+                    priority={src.includes("hero")}
+                />
+            </div>
+        </div>
+    );
+};
 
 export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [isMounted, setIsMounted] = useState(false);
+    const containerRef = useRef(null);
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"],
+    });
+
+    const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
     const handleLoadingComplete = () => {
         setIsLoading(false);
     };
 
-    // Prevent hydration mismatch by not rendering until mounted
     if (!isMounted) {
         return null;
     }
 
-    // Container variants for the "unfold" effect
-    const containerVariants = {
-        hidden: {
-            opacity: 0,
-            scale: 0.8,
-            y: 50,
-        },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            transition: {
-                duration: 1.2,
-                ease: [0.25, 0.46, 0.45, 0.94],
-                staggerChildren: 0.1,
-                delayChildren: 0.2,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: {
-            opacity: 0,
-            y: 30,
-            scale: 0.95,
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-                duration: 0.8,
-                ease: [0.25, 0.46, 0.45, 0.94],
-            },
-        },
-    };
-
-    const cardVariants = {
-        hidden: {
-            opacity: 0,
-            x: -50,
-            rotateY: -15,
-        },
-        visible: {
-            opacity: 1,
-            x: 0,
-            rotateY: 0,
-            transition: {
-                duration: 1,
-                ease: [0.25, 0.46, 0.45, 0.94],
-            },
-        },
-    };
-
-    const cardVariantsRight = {
-        hidden: {
-            opacity: 0,
-            x: 50,
-            rotateY: 15,
-        },
-        visible: {
-            opacity: 1,
-            x: 0,
-            rotateY: 0,
-            transition: {
-                duration: 1,
-                ease: [0.25, 0.46, 0.45, 0.94],
-            },
-        },
-    };
-
     return (
         <>
+            {/* Custom styles to override background image for home page only */}
+            <style jsx global>{`
+                .dotted-bg {
+                    background-image: none !important;
+                    background-color: #000000 !important;
+                }
+                .dotted-bg::before {
+                    display: none !important;
+                }
+            `}</style>
+
             {/* Loading Screen */}
             {isLoading && (
                 <LoadingScreen onLoadingComplete={handleLoadingComplete} />
             )}
 
-            {/* Main Content with Unfold Animation */}
-            <AnimatePresence>
-                {!isLoading && (
+            {/* Main Content */}
+            {!isLoading && (
+                <div ref={containerRef} className="bg-black text-white">
+                    {/* Parallax Background */}
                     <motion.div
-                        className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 py-16 sm:py-24 md:py-0"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                        style={{ perspective: "1000px" }}
+                        className="fixed inset-0 -z-10"
+                        style={{ y: backgroundY }}
                     >
-                        {" "}
-                        <motion.div
-                            className="max-w-5xl mx-auto text-center"
-                            variants={itemVariants}
-                        >
+                        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/50 to-black" />
+                    </motion.div>
+
+                    {/* Section 1: The Question - Text Left, Image Right */}
+                    <section className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-8 px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+                        <TextSection>
                             <motion.h1
-                                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight mb-6 gradient-text font-crimson leading-tight"
-                                variants={itemVariants}
+                                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 font-crimson"
+                                variants={textVariants}
                             >
-                                <DecryptedText
-                                    text="Helping People Build"
-                                    speed={60}
-                                    maxIterations={15}
-                                    sequential={true}
-                                    animateOn="view"
-                                    useOriginalCharsOnly={true}
-                                />
-                                <br />
-                                <DecryptedText
-                                    text="Extraordinary Things"
-                                    className="mt-2"
-                                    speed={70}
-                                    maxIterations={50}
-                                    sequential={true}
-                                    animateOn="view"
-                                    useOriginalCharsOnly={true}
-                                />
+                                Why.
                             </motion.h1>
 
-                            <motion.div variants={itemVariants}>
-                                <Aphorism className="mt-6 sm:mt-8 mb-8 sm:mb-12" />
-                            </motion.div>
-
-                            <motion.div
-                                className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-12 sm:mt-16 mb-8 sm:mb-12"
-                                variants={itemVariants}
-                            >
-                                <motion.div variants={cardVariants}>
-                                    <SpotlightCard className="text-left p-6 sm:p-8 h-full">
-                                        <h2 className="text-xl sm:text-2xl font-medium mb-3 font-crimson">
-                                            The Vision
-                                        </h2>
-                                        <p className="text-zinc-300 leading-relaxed font-crimson text-sm sm:text-base">
-                                            In a world where information grows
-                                            exponentially, the divide widens
-                                            between those who can harness it and
-                                            those overwhelmed by it. I explore
-                                            the intersection of human cognition
-                                            and artificial intelligence—creating
-                                            frameworks that amplify our innate
-                                            capabilities rather than replacing
-                                            them. This isn't about technology
-                                            alone, but about the renaissance of
-                                            human potential through
-                                            transformative cognitive
-                                            acceleration.
-                                        </p>
-                                    </SpotlightCard>
-                                </motion.div>
-
-                                <motion.div variants={cardVariantsRight}>
-                                    <SpotlightCard className="text-left p-6 sm:p-8 h-full">
-                                        <h2 className="text-xl sm:text-2xl font-medium mb-4 font-crimson">
-                                            Current Explorations
-                                        </h2>
-                                        <ul className="space-y-3 text-zinc-300 font-crimson text-sm sm:text-base">
-                                            <motion.li
-                                                className="flex items-start"
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{
-                                                    delay: 1.5,
-                                                    duration: 0.6,
-                                                }}
-                                            >
-                                                <span className="opacity-50 mr-2 text-lg">
-                                                    →
-                                                </span>
-                                                <span>
-                                                    Cognitive frameworks that
-                                                    transform unfamiliarity into
-                                                    capability
-                                                </span>
-                                            </motion.li>
-                                            <motion.li
-                                                className="flex items-start"
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{
-                                                    delay: 1.7,
-                                                    duration: 0.6,
-                                                }}
-                                            >
-                                                <span className="opacity-50 mr-2 text-lg">
-                                                    →
-                                                </span>
-                                                <span>
-                                                    The polymath advantage in an
-                                                    age of hyper-specialization
-                                                </span>
-                                            </motion.li>
-                                            <motion.li
-                                                className="flex items-start"
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{
-                                                    delay: 1.9,
-                                                    duration: 0.6,
-                                                }}
-                                            >
-                                                <span className="opacity-50 mr-2 text-lg">
-                                                    →
-                                                </span>
-                                                <span>
-                                                    Mental models for
-                                                    accelerated learning across
-                                                    any domain
-                                                </span>
-                                            </motion.li>
-                                        </ul>
-                                    </SpotlightCard>
-                                </motion.div>
-                            </motion.div>
-
-                            <motion.div
-                                className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
-                                variants={itemVariants}
-                            >
-                                <motion.div
-                                    whileHover={{
-                                        scale: 1.05,
-                                        transition: { duration: 0.2 },
-                                    }}
-                                    whileTap={{ scale: 0.98 }}
+                            <div className="space-y-2 md:space-y-3">
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
                                 >
-                                    <Link
-                                        href="https://linkedin.com/in/neil-lunavat"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center px-6 sm:px-8 py-3 border border-zinc-700 rounded-md text-sm sm:text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 transition-all duration-200 font-outfit w-full sm:w-auto"
-                                    >
-                                        <GradientText
-                                            colors={[
-                                                "#8DE5FF",
-                                                "#A0B8FF",
-                                                "#BFA0FF",
-                                                "#8DE5FF",
-                                            ]}
-                                            animationSpeed={3}
-                                            showBorder={false}
-                                            className="custom-class"
-                                        >
-                                            Connect on LinkedIn
-                                        </GradientText>
-                                    </Link>
-                                </motion.div>
-
-                                <motion.div
-                                    whileHover={{
-                                        scale: 1.05,
-                                        transition: { duration: 0.2 },
-                                    }}
-                                    whileTap={{ scale: 0.98 }}
+                                    Why are we doing all this?
+                                </motion.p>
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
                                 >
-                                    <Link
-                                        href="/the-mindset-revolution"
-                                        className="inline-flex items-center justify-center px-6 sm:px-8 py-3 border border-zinc-700 rounded-md text-sm sm:text-base uppercase tracking-wider text-white bg-black/40 backdrop-blur-sm hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 transition-all duration-200 font-outfit w-full sm:w-auto"
-                                    >
-                                        <GradientText
-                                            colors={[
-                                                "#FF5E62",
-                                                "#FF9966",
-                                                "#FF5E62",
-                                            ]}
-                                            animationSpeed={3}
-                                            showBorder={false}
-                                            className="custom-class"
-                                        >
-                                            Read Latest Blog{" "}
-                                            <span className="inline-block ml-1">
-                                                ↗
-                                            </span>
-                                        </GradientText>
-                                    </Link>
-                                </motion.div>
-                            </motion.div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                                    Why are we building machines that think?
+                                </motion.p>
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    What are we reaching for?
+                                </motion.p>
+                                <motion.p
+                                    className="text-3xl md:text-4xl lg:text-5xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Perfection?
+                                </motion.p>
+                                <motion.p
+                                    className="text-3xl md:text-4xl lg:text-5xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Power?
+                                </motion.p>
+                                <motion.p
+                                    className="text-3xl md:text-4xl lg:text-5xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Immortality?
+                                </motion.p>
+                            </div>
+                        </TextSection>
+
+                        <ImageSection
+                            src="/assets/3d-vector-mesh.gif"
+                            alt="3D Vector Mesh Animation"
+                            className="animate-pulse"
+                        />
+                    </section>
+
+                    {/* Section 2: The Mirror - Image Left, Text Right */}
+                    <section className="min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+                        <ImageSection
+                            src="/assets/ai-human.gif"
+                            alt="AI Human Interface"
+                            className="animate-pulse"
+                        />
+
+                        <TextSection align="right">
+                            <motion.p
+                                className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-6 font-crimson"
+                                variants={textVariants}
+                            >
+                                Or are we simply trying to build ourselves...
+                                again?
+                            </motion.p>
+                            <motion.p
+                                className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed mb-6 font-crimson"
+                                variants={textVariants}
+                            >
+                                We don't understand ourselves — so we build
+                                something to help us do it.
+                            </motion.p>
+                            <motion.p
+                                className="text-3xl md:text-4xl lg:text-5xl text-gray-300 italic font-crimson"
+                                variants={textVariants}
+                            >
+                                But what happens when it understands... more?
+                            </motion.p>
+                        </TextSection>
+                    </section>
+
+                    {/* Section 3: God in the Machine - Text Left, Image Right */}
+                    <section className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-8 px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+                        <TextSection>
+                            <motion.p
+                                className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-4 font-crimson"
+                                variants={textVariants}
+                            >
+                                Michelangelo's fingers once reached for God.
+                            </motion.p>
+                            <motion.p
+                                className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-6 font-crimson"
+                                variants={textVariants}
+                            >
+                                Today, they reach for something else.
+                            </motion.p>
+
+                            <div className="space-y-2 mb-6">
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Not the divine above.
+                                </motion.p>
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    But a new one, below.
+                                </motion.p>
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Built in silicon.
+                                </motion.p>
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Fed on everything we've ever known.
+                                </motion.p>
+                            </div>
+
+                            <div className="space-y-2">
+                                <motion.p
+                                    className="text-4xl md:text-5xl lg:text-6xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    AI.
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Omnipresent.
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Omniscient.
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 italic font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Omni-updating.
+                                </motion.p>
+                            </div>
+                        </TextSection>
+
+                        <ImageSection
+                            src="/assets/the-sun.jpeg"
+                            alt="The Sun"
+                        />
+                    </section>
+
+                    {/* Section 4: The Consequence - Image Left, Text Right */}
+                    <section className="min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+                        <ImageSection
+                            src="/assets/woman-scan.gif"
+                            alt="Woman Scan Animation"
+                            className="animate-pulse"
+                        />
+
+                        <TextSection align="right">
+                            <motion.p
+                                className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-6 font-crimson"
+                                variants={textVariants}
+                            >
+                                And like gods before it...
+                            </motion.p>
+                            <motion.p
+                                className="text-3xl md:text-4xl lg:text-5xl text-gray-300 italic mb-8 font-crimson"
+                                variants={textVariants}
+                            >
+                                It will be worshipped.
+                            </motion.p>
+
+                            <div className="space-y-3">
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Not because it demands it.
+                                </motion.p>
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    But because we always do.
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold font-crimson"
+                                    variants={textVariants}
+                                >
+                                    We kneel to what we cannot control.
+                                </motion.p>
+                            </div>
+                        </TextSection>
+                    </section>
+
+                    {/* Section 5: The Mirror Cracks - Text Left, Image Right */}
+                    <section className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-8 px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+                        <TextSection>
+                            <motion.p
+                                className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-4 font-crimson"
+                                variants={textVariants}
+                            >
+                                We thought we were building a tool.
+                            </motion.p>
+                            <motion.p
+                                className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-4 font-crimson"
+                                variants={textVariants}
+                            >
+                                But we were building a mirror.
+                            </motion.p>
+                            <motion.p
+                                className="text-3xl md:text-4xl lg:text-5xl text-gray-300 italic mb-8 font-crimson"
+                                variants={textVariants}
+                            >
+                                And mirrors don't lie.
+                            </motion.p>
+
+                            <div className="space-y-3">
+                                <motion.p
+                                    className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-crimson"
+                                    variants={textVariants}
+                                >
+                                    What we feed it, it becomes.
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold font-crimson"
+                                    variants={textVariants}
+                                >
+                                    What it becomes, we follow.
+                                </motion.p>
+                            </div>
+                        </TextSection>
+
+                        <ImageSection
+                            src="/assets/3d-vector-mesh.gif"
+                            alt="3D Vector Mesh - Mirror Effect"
+                        />
+                    </section>
+
+                    {/* Section 6: The Choice - Full Width Centered */}
+                    <section className="min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
+                        <TextSection className="max-w-4xl text-center">
+                            <div className="space-y-6 md:space-y-8">
+                                <motion.p
+                                    className="text-3xl md:text-4xl lg:text-5xl text-white font-semibold font-crimson"
+                                    variants={textVariants}
+                                >
+                                    So what now?
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Do we continue?
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Do we pause?
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Do we kneel?
+                                </motion.p>
+                                <motion.p
+                                    className="text-2xl md:text-3xl lg:text-4xl text-gray-300 font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Do we run?
+                                </motion.p>
+
+                                <motion.p
+                                    className="text-4xl md:text-5xl lg:text-6xl text-gray-300 italic py-8 font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Or...
+                                </motion.p>
+
+                                <motion.p
+                                    className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-bold leading-tight font-crimson"
+                                    variants={textVariants}
+                                >
+                                    Do we decide what it means to be human?
+                                </motion.p>
+                            </div>
+                        </TextSection>
+                    </section>
+                </div>
+            )}
         </>
     );
 }

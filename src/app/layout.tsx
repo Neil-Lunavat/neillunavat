@@ -49,7 +49,7 @@ export default function RootLayout({
                 />
                 <link
                     rel="preload"
-                    href="/background1.webp"
+                    href="/background.webp"
                     as="image"
                     type="image/webp"
                 />
@@ -59,7 +59,7 @@ export default function RootLayout({
                     as="image"
                     type="image/webp"
                 />
-            </head>{" "}
+            </head>
             <body className="min-h-screen flex flex-col dotted-bg antialiased">
                 <Header />
                 <main className="flex-grow">{children}</main>

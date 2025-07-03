@@ -35,13 +35,13 @@ export default function Header() {
         },
     ];
     return (
-        <motion.header
-            className="py-6 px-6 md:px-12 backdrop-blur-sm bg-black/30 z-30 relative"
+        <motion.nav
+            className="fixed top-0 left-0 right-0 pt-4 pb-2 pl-8 md:pl-16 lg:pl-24 pr-8 md:pr-16 lg:pr-24 z-50"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
-            <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div className="flex justify-between items-center w-full">
                 <motion.div
                     className="flex items-center z-50"
                     whileHover={{ scale: 1.02 }}
@@ -51,38 +51,29 @@ export default function Header() {
                         href="/"
                         className="flex items-center text-xl md:text-2xl font-semibold tracking-wider font-crimson group"
                     >
-                        <motion.div
-                            whileHover={{ rotate: 360 }}
-                            transition={{ duration: 0.8, ease: "easeInOut" }}
-                        >
-                            <Image
-                                src="/logo.webp"
-                                alt="Neil Lunavat Logo"
-                                width={60}
-                                height={60}
-                                className="mr-2"
-                                priority
-                            />
-                        </motion.div>{" "}
+                        <Image
+                            src="/logo.webp"
+                            alt="Neil Lunavat Logo"
+                            width={50}
+                            height={50}
+                            className="mr-3"
+                            priority
+                        />
                         <motion.span
-                            className="hidden md:block text-gradient"
-                            animate={{
-                                backgroundPosition: [
-                                    "0% 50%",
-                                    "100% 50%",
-                                    "0% 50%",
-                                ],
-                            }}
+                            className="hidden md:block text-white"
+                            initial={{ opacity: 0.8 }}
+                            animate={{ opacity: [0.8, 1, 0.8] }}
                             transition={{
                                 duration: 3,
                                 repeat: Infinity,
-                                ease: "linear",
+                                ease: "easeInOut",
                             }}
                         >
                             NEIL LUNAVAT
                         </motion.span>
                     </Link>
-                </motion.div>{" "}
+                </motion.div>
+
                 {/* Desktop Nav */}
                 <motion.nav
                     className="hidden md:flex space-x-8"
@@ -91,7 +82,7 @@ export default function Header() {
                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                 >
                     <motion.div
-                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2 }}
                     >
@@ -99,14 +90,13 @@ export default function Header() {
                             href="https://linkedin.com/in/neil-lunavat"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit relative group"
+                            className="text-sm font-crimson tracking-wide text-zinc-300 hover:text-white transition-colors duration-300"
                         >
                             LinkedIn
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-blue-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
                     </motion.div>
                     <motion.div
-                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2 }}
                     >
@@ -114,15 +104,13 @@ export default function Header() {
                             href="https://instagram.com/uhh_neil"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit relative group"
+                            className="text-sm font-crimson tracking-wide text-zinc-300 hover:text-white transition-colors duration-300"
                         >
-                            {" "}
                             Instagram
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-pink-400 to-purple-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
                     </motion.div>
                     <motion.div
-                        whileHover={{ scale: 1.1, y: -2 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2 }}
                     >
@@ -130,13 +118,13 @@ export default function Header() {
                             href="https://github.com/neil-lunavat"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit relative group"
+                            className="text-sm font-crimson tracking-wide text-zinc-300 hover:text-white transition-colors duration-300"
                         >
                             GitHub
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gray-400 to-gray-600 group-hover:w-full transition-all duration-300"></span>
                         </Link>
                     </motion.div>
                 </motion.nav>
+
                 {/* Hamburger Button */}
                 <button
                     className="md:hidden z-50 flex flex-col justify-center items-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-50 hover:bg-white/10 transition-colors duration-200"
@@ -171,6 +159,7 @@ export default function Header() {
                         ></motion.span>
                     </div>
                 </button>
+
                 {/* Mobile Menu */}
                 <AnimatePresence>
                     {isMenuOpen && (
@@ -206,7 +195,7 @@ export default function Header() {
                                                     : ""
                                             }
                                             onClick={() => setIsMenuOpen(false)}
-                                            className="text-2xl uppercase tracking-widest hover:text-zinc-400 transition-colors duration-200 font-outfit"
+                                            className="text-2xl font-crimson tracking-wide text-zinc-300 hover:text-white transition-colors duration-300"
                                         >
                                             {item.name}
                                         </Link>
@@ -217,6 +206,6 @@ export default function Header() {
                     )}
                 </AnimatePresence>
             </div>
-        </motion.header>
+        </motion.nav>
     );
 }
