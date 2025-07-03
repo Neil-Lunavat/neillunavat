@@ -5,7 +5,11 @@ import ImageSection from "@/components/ui/image-section";
 export default function MirrorSection() {
     return (
         <section className="min-h-screen flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 px-6 md:px-12 lg:px-24 py-16 md:py-24 max-w-[80vw] mx-auto">
-            <ImageSection src="/assets/ai-human.gif" alt="AI Human Interface" />
+            <ImageSection
+                src="/assets/ai-human.gif"
+                alt="AI Human Interface"
+                unoptimized={true}
+            />
 
             <TextSection align="right">
                 <motion.p

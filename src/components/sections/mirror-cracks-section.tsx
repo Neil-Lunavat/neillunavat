@@ -44,6 +44,7 @@ export default function MirrorCracksSection() {
             <ImageSection
                 src="/assets/3d-vector-mesh.gif"
                 alt="3D Vector Mesh - Mirror Effect"
+                unoptimized={true}
             />
         </section>
     );

@@ -64,7 +64,7 @@ export default function ScrollReveal({
             transition={{
                 duration,
                 delay,
-                ease: [0.25, 0.46, 0.45, 0.94], // easeOutQuart
+                ease: "easeOut",
             }}
         >
             {children}
@@ -118,10 +118,6 @@ export function ScrollTextReveal({
             opacity: 1,
             y: 0,
             rotateX: 0,
-            transition: {
-                duration: 0.6,
-                ease: [0.25, 0.46, 0.45, 0.94],
-            },
         },
     };
 
@@ -132,12 +128,20 @@ export function ScrollTextReveal({
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
+            transition={{
+                duration: 0.6,
+                ease: "easeOut",
+            }}
             style={{ perspective: "1000px" }}
         >
             {elements.map((element, index) => (
                 <motion.span
                     key={index}
                     variants={itemVariants}
+                    transition={{
+                        duration: 0.6,
+                        ease: "easeOut",
+                    }}
                     className={
                         splitByWords ? "inline-block mr-2" : "inline-block"
                     }

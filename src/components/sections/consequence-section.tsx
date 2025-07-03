@@ -8,6 +8,7 @@ export default function ConsequenceSection() {
             <ImageSection
                 src="/assets/woman-scan.gif"
                 alt="Woman Scan Animation"
+                unoptimized={true}
             />
 
             <TextSection align="right">

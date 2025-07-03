@@ -13,6 +13,7 @@ interface ImageSectionProps {
      */
     tiltedCardProps?: Record<string, unknown>;
     customScale?: number;
+    unoptimized?: boolean;
 }
 
 export default function ImageSection({
@@ -20,6 +21,7 @@ export default function ImageSection({
     alt,
     className = "",
     customScale = 1,
+    unoptimized = false,
 }: ImageSectionProps) {
     return (
         <div
@@ -34,6 +36,7 @@ export default function ImageSection({
                     height={450}
                     className="object-contain w-full h-auto"
                     priority={src.includes("hero")}
+                    unoptimized={unoptimized}
                 />
             </div>
         </div>
